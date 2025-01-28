@@ -21,16 +21,14 @@ setup:
 	@if [ ! -d $(VENV) ]; then \
 		$(PYTHON) -m venv $(VENV); \
 	fi
-	. $(VENV)/bin/activate && \
-	$(PIP) install -r $(REQUIREMENTS_FILE)
+	$(VENV)/bin/$(PIP) install -r $(REQUIREMENTS_FILE)
 
 # Start the application server
 run:
 	@if [ ! -d $(VENV) ]; then \
 		$(MAKE) setup; \
 	fi
-	. $(VENV)/bin/activate && \
-	$(UVICORN) $(MAIN_MODULE) --reload
+	$(VENV)/bin/$(UVICORN) $(MAIN_MODULE) --reload
 
 # Clean up cached files and the virtual environment
 clean:
