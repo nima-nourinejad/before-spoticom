@@ -1,5 +1,8 @@
-from sqlAlchemy import create_engine
-from sqlAlchemy.orm import sessionmaker
-from sqlAlchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+URL_DATABASE = "postgresql://postgres:123456@localhost:5432/game"
+engine = create_engine(URL_DATABASE)
+Session = sessionmaker(auto_commit=False, auto_flush=False, bind=engine)
+Base = declarative_base()
