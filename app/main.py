@@ -1,13 +1,15 @@
 from fastapi import FastAPI, Depends
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session
 from .schemas import QuestionBase
 from .models import Questions, Choices
+from .database import engine, Base
 
 
 app = FastAPI()
 
-from sqlalchemy.orm import sessionmaker
-from .database import engine
 
+Base.metadata.create_all(bind=engine)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
@@ -20,8 +22,6 @@ def get_db():
 
 
 db_dependency = Depends(get_db)
-
-from sqlalchemy.orm import Session
 
 
 @app.post("/questions/")

@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 USER = "postgres"
 PASSWORD = "123456"
@@ -9,7 +10,4 @@ URL_DATABASE = f"{PREFIX}://{USER}:{PASSWORD}@{HOST_PORT}/{DB_NAME}"
 engine = create_engine(URL_DATABASE)
 
 
-from sqlalchemy.ext.declarative import declarative_base
-
 Base = declarative_base()
-Base.metadata.create_all(bind=engine)
