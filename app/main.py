@@ -2,24 +2,18 @@ from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from .schemas import QuestionBase
 from .models import Questions, Choices
-from .database import database
+from .database import Database
 
 
 app = FastAPI()
 
-SessionLocal = database.build_session()
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+database = Database()
 
 
 @app.post("/questions/")
-def create_questions(question: QuestionBase, db: Session = Depends(get_db)):
+def create_questions(
+    question: QuestionBase, db: Session = Depends(database.get_session)
+):
     db_question = Questions(question_text=question.question_text)
     db.add(db_question)
     db.commit()

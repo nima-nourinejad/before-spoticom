@@ -1,14 +1,14 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from .database import database
+from .database import Base
 
 
-class Questions(database.base):
+class Questions(Base):
     __tablename__ = "questions"
     id = Column(Integer, primary_key=True, index=True)
     question_text = Column(String, index=True)
 
 
-class Choices(database.base):
+class Choices(Base):
     __tablename__ = "choices"
     id = Column(Integer, primary_key=True, index=True)
     choice_text = Column(String, index=True)
