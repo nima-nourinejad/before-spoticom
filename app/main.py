@@ -18,11 +18,14 @@ def create_questions(
     db.add(db_question)
     db.commit()
     db.refresh(db_question)
-    for choice in question.choices:
-        db_choice = Choices(
+    db_choices = [
+        Choices(
             choice_text=choice.choice_text,
             is_correct=choice.is_correct,
             question_id=db_question.id,
         )
-        db.add(db_choice)
+        for choice in question.choices
+    ]
+    db.add_all(db_choices)
     db.commit()
+    return "Question created successfully"
