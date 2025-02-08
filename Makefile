@@ -33,6 +33,10 @@ run:
 format:
 	$(VENV)/bin/black app
 
+lint:
+	$(VENV)/bin/pylint --disable=missing-docstring app
+
+
 # Clean up cached files and the virtual environment
 clean:
 	rm -rf $(VENV)

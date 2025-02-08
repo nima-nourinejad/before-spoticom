@@ -1,61 +1,14 @@
-# 1
-from sqlalchemy import create_engine
-
-user = "postgres"
-password = "123456"
-db_name = "game"
-host_port = "localhost:5432"
-prefix = "postgresql+psycopg"
-URL_DATABASE = f"{prefix}://{user}:{password}@{host_port}/{db_name}"
-engine = create_engine(URL_DATABASE)
-
-# 2
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
-
-# 3
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-
-
-class Questions(Base):
-    __tablename__ = "questions"
-    id = Column(Integer, primary_key=True, index=True)
-    question_text = Column(String, index=True)
-
-
-class Choices(Base):
-    __tablename__ = "choices"
-    id = Column(Integer, primary_key=True, index=True)
-    choice_text = Column(String, index=True)
-    is_correct = Column(Boolean, default=False)
-    question_id = Column(Integer, ForeignKey("questions.id"))
-
-
-# 4
-Base.metadata.create_all(bind=engine)
-
-# 5
-from sqlalchemy.orm import sessionmaker
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
 from fastapi import FastAPI, Depends
-from pydantic import BaseModel
-from typing import List
+from .schemas import QuestionBase
+from .models import Questions, Choices
+
 
 app = FastAPI()
 
+from sqlalchemy.orm import sessionmaker
+from .database import engine
 
-class ChoiceBase(BaseModel):
-    choice_text: str
-    is_correct: bool
-
-
-class QuestionBase(BaseModel):
-    question_text: str
-    choices: List[ChoiceBase]
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 def get_db():
