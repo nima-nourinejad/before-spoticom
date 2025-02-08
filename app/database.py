@@ -1,10 +1,15 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy import create_engine
+# user = "postgres"
+# password = "123456"
+# db_name = "game"
+# host_port = "localhost:5432"
+# prefix = "postgresql+psycopg"
+# URL_DATABASE = f"{prefix}://{user}:{password}@{host_port}/{db_name}"
+# engine = create_engine(URL_DATABASE)
 
-URL_DATABASE = "postgresql://postgres:123456@localhost:5432/game"
-engine = create_engine(URL_DATABASE)
-Session = sessionmaker(auto_commit=False, auto_flush=False, bind=engine)
-Base = declarative_base()
+# from sqlalchemy.ext.declarative import declarative_base
+# Base = declarative_base()
 
 
+# from sqlalchemy.orm import sessionmaker
+# Session = sessionmaker(auto_commit=False, auto_flush=False, bind=engine)
