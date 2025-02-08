@@ -1,16 +1,13 @@
 from fastapi import FastAPI, Depends
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 from .schemas import QuestionBase
 from .models import Questions, Choices
-from .database import engine, Base
+from .database import database
 
 
 app = FastAPI()
 
-
-Base.metadata.create_all(bind=engine)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = database.build_session()
 
 
 def get_db():
