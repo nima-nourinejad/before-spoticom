@@ -21,9 +21,6 @@ def get_db():
         db.close()
 
 
-db_dependency = Depends(get_db)
-
-
 @app.post("/questions/")
 def create_questions(question: QuestionBase, db: Session = Depends(get_db)):
     db_question = Questions(question_text=question.question_text)
