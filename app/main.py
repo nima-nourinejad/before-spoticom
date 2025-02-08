@@ -17,7 +17,9 @@ def create_questions(
     db_question = Questions(question_text=question.question_text)
     db.add(db_question)
     db.commit()
+
     db.refresh(db_question)
+
     db_choices = [
         Choices(
             choice_text=choice.choice_text,
@@ -28,4 +30,5 @@ def create_questions(
     ]
     db.add_all(db_choices)
     db.commit()
+
     return "Question created successfully"
