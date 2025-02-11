@@ -14,16 +14,12 @@ class Database:
 
     def __init__(self):
         self.__engine = self.__build_engine()
-        self.__build_tables()
 
     def __build_url(self):
         return f"{self.PREFIX}://{self.USER}:{self.PASSWORD}@{self.HOST_PORT}/{self.DB_NAME}"
 
     def __build_engine(self):
         return create_engine(self.__build_url())
-
-    def __build_tables(self):
-        Base.metadata.create_all(bind=self.__engine)
 
     def get_session(self):
         session_factory = sessionmaker(
