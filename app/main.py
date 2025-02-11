@@ -21,3 +21,7 @@ def create_questions(
     database_util.add_choices()
 
     return {"message": "Question and choices created successfully"}
+
+@app.get("/")
+def read_root():
+    return {"message": "I am alive!"}

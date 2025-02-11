@@ -1,8 +1,7 @@
-fastapi
-uvicorn
-SQLAlchemy
-psycopg2-binary
-alembic
-mypy
-black
-pylint
+fastapi==0.95.1
+SQLAlchemy==2.0.17
+psycopg2-binary==2.9.6
+alembic==1.11.0
+mypy==1.5.0
+black==23.1.0
+pylint==2.17.2
