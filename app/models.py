@@ -6,6 +6,8 @@ class Questions(Base):
     __tablename__ = "questions"
     id = Column(Integer, primary_key=True, index=True)
     question_text = Column(String, index=True)
+    fake_column = Column(Boolean, default=False)
+    fake_column2 = Column(Boolean, default=False)
 
 
 class Choices(Base):
