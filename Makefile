@@ -1,5 +1,5 @@
 PYTHON = python3
-PIP = pip
+PIP = pip3
 UVICORN = uvicorn
 VENV = venv
 REQUIREMENTS_FILE = requirements.txt
