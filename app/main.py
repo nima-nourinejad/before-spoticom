@@ -15,9 +15,9 @@ def create_questions(
     question: QuestionBase, session: Session = Depends(database.get_session)
 ):
 
-    util = DataBaseUtil(session, question)
-    util.add_question()
-    util.get_question_id()
-    util.add_choices()
+    database_util = DataBaseUtil(session, question)
+    database_util.add_question()
+    database_util.get_question_id()
+    database_util.add_choices()
 
     return {"message": "Question and choices created successfully"}
