@@ -70,5 +70,4 @@ help:
 	@echo "  downgrade       Roll back the last database migration"
 	@echo "  format          Auto-format Python files"
 	@echo "  check           Run static analysis using Pylint"
-	@echo "  test            Run unit tests using pytest"
 	@echo "  clean           Remove virtual environment and cached files (keep Alembic migrations)"
