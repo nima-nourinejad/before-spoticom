@@ -4,30 +4,18 @@ UVICORN = uvicorn
 VENV = venv
 REQUIREMENTS_FILE = requirements.txt
 ALEMBIC_DIR = alembic
-USER = postgres
-PASSWORD = 123456
-DB_NAME = game
-HOST_PORT = localhost:5432
-PREFIX = postgresql+psycopg2
 MAIN_MODULE = app.main:app
 
 .PHONY: setup run upgrade downgrade format check test clean help
 
-setup:
+setup: 
 	@if [ ! -d $(VENV) ]; then \
 		$(PYTHON) -m venv $(VENV); \
 	fi
 	$(VENV)/bin/$(PIP) install -r $(REQUIREMENTS_FILE)
-
 	@if [ ! -d $(ALEMBIC_DIR) ]; then \
 		$(VENV)/bin/alembic init $(ALEMBIC_DIR); \
 	fi
-	@sed -i 's|^sqlalchemy.url = .*|sqlalchemy.url = ${PREFIX}://$(USER):$(PASSWORD)@$(HOST_PORT)/$(DB_NAME)|' alembic.ini
-	@if [ -z "$$( $(VENV)/bin/alembic heads )" ]; then \
-		$(VENV)/bin/alembic revision --autogenerate -m "Initial migration"; \
-		$(VENV)/bin/alembic upgrade head; \
-	fi
-
 
 
 upgrade:

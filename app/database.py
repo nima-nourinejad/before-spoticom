@@ -1,8 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from alembic import context
-from alembic.config import Config
 
 Base = declarative_base()
 
@@ -12,7 +10,7 @@ class Database:
     PASSWORD = "123456"
     DB_NAME = "game"
     HOST_PORT = "localhost:5432"
-    PREFIX = "postgresql+psycopg2"
+    PREFIX = "postgresql+psycopg"
 
     def __init__(self):
         self.__engine = self.__build_engine()
@@ -24,8 +22,8 @@ class Database:
     def __build_engine(self):
         return create_engine(self.__build_url())
 
-    def __build_tables(self):
-        Base.metadata.create_all(bind=self.__engine)
+    # def __build_tables(self):
+    #     Base.metadata.create_all(bind=self.__engine)
 
     def get_session(self):
         session_factory = sessionmaker(
