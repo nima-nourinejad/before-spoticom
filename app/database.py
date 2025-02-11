@@ -10,7 +10,7 @@ class Database:
     PASSWORD = "123456"
     DB_NAME = "game"
     HOST_PORT = "localhost:5432"
-    PREFIX = "postgresql+psycopg"
+    PREFIX = "postgresql+psycopg2"
 
     def __init__(self):
         self.__engine = self.__build_engine()
