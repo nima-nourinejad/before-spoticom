@@ -21,6 +21,9 @@ from .database import Base
 #     question_id: Column[int] = Column(Integer, ForeignKey("questions.id"))
 
 
+
+
+
 class User(Base):
 	__tablename__ = "user"
 	
