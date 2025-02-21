@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:13  # Using official PostgreSQL Docker image
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres  # Database username
+      POSTGRES_PASSWORD: 123456  # Database password
+      POSTGRES_DB: spoticom  # Database name
+    ports:
+      - "5432:5432"  # Expose the database on the host machine's port 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist data
+
+  app:
+    build: .
+    container_name: fastapi_app
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://postgres:123456@db:5432/spoticom  # URL to connect to PostgreSQL container
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db  # Ensure db service is up before starting the FastAPI app
+    volumes:
+      - .:/app  # Mount local project directory to /app in the container
+
+volumes:
+  postgres_data:  # Named volume to persist data between container restarts

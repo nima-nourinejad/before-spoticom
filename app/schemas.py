@@ -1,12 +1,17 @@
-from typing import List
 from pydantic import BaseModel
 
 
-# class ChoiceBase(BaseModel):
-#     choice_text: str
-#     is_correct: bool
+class SignupRequestSchema(BaseModel):
+    username: str
+    email: str
+    password: str
 
 
-# class QuestionBase(BaseModel):
-#     question_text: str
-#     choices: List[ChoiceBase]
+class LoginRequestSchema(BaseModel):
+    username: str
+    password: str
+
+
+class AuthResponseSchema(BaseModel):
+    access_token: str
+    token_type: str

@@ -9,8 +9,8 @@ Base = declarative_base()
 class Database:
     USER: str = "postgres"
     PASSWORD: str = "123456"
-    DB_NAME: str = "game"
-    HOST_PORT: str = "localhost:5432"
+    DB_NAME: str = "spoticom"
+    HOST_PORT: str = "db:5432"
     PREFIX: str = "postgresql+psycopg2"
 
     def __init__(self) -> None:
@@ -31,3 +31,6 @@ class Database:
             yield session
         finally:
             session.close()
+
+
+database = Database()
