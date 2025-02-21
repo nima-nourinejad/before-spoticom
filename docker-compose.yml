@@ -1,27 +1,32 @@
+
 services:
   db:
-    image: postgres:13  # Using official PostgreSQL Docker image
+    image: postgres:13
     container_name: postgres_db
     environment:
-      POSTGRES_USER: postgres  # Database username
-      POSTGRES_PASSWORD: 123456  # Database password
-      POSTGRES_DB: spoticom  # Database name
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: spoticom
     ports:
-      - "5432:5432"  # Expose the database on the host machine's port 5432
+      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data  # Persist data
+      - postgres_data:/var/lib/postgresql/data
 
   app:
     build: .
     container_name: fastapi_app
     environment:
-      - DATABASE_URL=postgresql+psycopg2://postgres:123456@db:5432/spoticom  # URL to connect to PostgreSQL container
+      - DATABASE_URL=postgresql+psycopg2://postgres:123456@db:5432/spoticom
     ports:
       - "8000:8000"
     depends_on:
-      - db  # Ensure db service is up before starting the FastAPI app
+      - db
     volumes:
-      - .:/app  # Mount local project directory to /app in the container
+      - .:/app
+      - ./alembic/versions:/app/alembic/versions
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
 
 volumes:
-  postgres_data:  # Named volume to persist data between container restarts
+  postgres_data:
