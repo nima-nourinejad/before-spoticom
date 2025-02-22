@@ -14,6 +14,8 @@ services:
 
   app:
     build: .
+    env_file:
+      - .env
     container_name: fastapi_app
     environment:
       - DATABASE_URL=postgresql+psycopg2://postgres:123456@db:5432/spoticom
