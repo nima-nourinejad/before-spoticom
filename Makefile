@@ -32,9 +32,9 @@ format:
 mypy:
 	docker-compose exec $(SERVICE_NAME) mypy app/
 
-git:
+commit:
 	git add -A
 	git commit -m "$(msg)"
 	git push
 
-.PHONY: build down up stop re exec migrate check format mypy git
+.PHONY: build down up stop re exec migrate check format mypy commit
