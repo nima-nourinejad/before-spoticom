@@ -1,9 +1,10 @@
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.schemas import AuthResponseSchema, LoginRequestSchema, SignupRequestSchema
 from app.database import database
 from app.models import User
+
 
 
 auth_router = APIRouter(prefix="/authentication", tags=["authentication"])
@@ -56,4 +57,14 @@ async def signup(
 async def login(
     request: LoginRequestSchema, session: Session = Depends(database.get_session)
 ) -> AuthResponseSchema:
-    pass
+    user = session.query(User).filter(User.email == request.username).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    if not pwd_context.verify(request.password, user.hashed_password):
+        raise HTTPException(status_code=400, detail="Incorrect password")
+    access_token = create_access_token(user.email)
+    return AuthResponseSchema(
+        access_token=access_token,
+        token_type="bearer"
+    )
