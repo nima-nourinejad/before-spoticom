@@ -20,10 +20,8 @@ exec:
 	docker-compose exec $(SERVICE_NAME) bash
 
 migrate:
-	docker-compose exec $(SERVICE_NAME) alembic upgrade head
-
-migrate-new:
 	docker-compose exec $(SERVICE_NAME) alembic revision --autogenerate -m "$(msg)"
+	docker-compose exec $(SERVICE_NAME) alembic upgrade head
 
 check:
 	docker-compose exec $(SERVICE_NAME) pylint --disable=missing-docstring app/
@@ -39,4 +37,4 @@ git:
 	git commit -m "$(msg)"
 	git push
 
-.PHONY: build down up stop re exec migrate migrate-new check format mypy git
+.PHONY: build down up stop re exec migrate check format mypy git
