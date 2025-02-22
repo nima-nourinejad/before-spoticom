@@ -16,7 +16,6 @@ class Database:
             autocommit=False, autoflush=False, bind=self.__engine
         )
 
-
     def __build_engine(self) -> Engine:
         db_url = os.getenv("DB_URL")
         if not db_url:
