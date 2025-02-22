@@ -9,7 +9,6 @@ Base = declarative_base()
 
 
 class Database:
-
     def __init__(self) -> None:
         self.__engine: Engine = self.__build_engine()
         self.__session_factory = sessionmaker(

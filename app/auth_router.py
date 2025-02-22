@@ -12,7 +12,6 @@ auth_router = APIRouter(prefix="/authentication", tags=["Authentication"])
 async def signup(
     request: SignupRequestSchema, session: Session = Depends(database.get_session)
 ) -> AuthResponseSchema:
-
     return AuthRouterUtil.signup(request, session)
 
 
@@ -20,5 +19,4 @@ async def signup(
 async def login(
     request: LoginRequestSchema, session: Session = Depends(database.get_session)
 ) -> AuthResponseSchema:
-
     return AuthRouterUtil.login(request, session)
