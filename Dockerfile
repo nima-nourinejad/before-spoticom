@@ -16,5 +16,5 @@ COPY . .
 # Expose port 8000 (default for FastAPI)
 EXPOSE 8000
 
-# Command to run the FastAPI app
+# Command to run the FastAPI app (uses environment variables at runtime)
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

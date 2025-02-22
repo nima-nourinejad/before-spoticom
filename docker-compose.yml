@@ -1,12 +1,13 @@
-
 services:
   db:
     image: postgres:13
     container_name: postgres_db
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: spoticom
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
@@ -18,7 +19,8 @@ services:
       - .env
     container_name: fastapi_app
     environment:
-      - DATABASE_URL=postgresql+psycopg2://postgres:123456@db:5432/spoticom
+      - DATABASE_URL=${DATABASE_URL}
+      - SECRET_KEY=${SECRET_KEY}
     ports:
       - "8000:8000"
     depends_on:

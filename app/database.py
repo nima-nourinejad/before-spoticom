@@ -17,7 +17,7 @@ class Database:
         )
 
     def __build_engine(self) -> Engine:
-        db_url = os.getenv("DB_URL")
+        db_url = os.getenv("DATABASE_URL")
         if not db_url:
             raise HTTPException(status_code=500, detail="Internal server error")
         return create_engine(db_url)

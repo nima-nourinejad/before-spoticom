@@ -1,8 +1,6 @@
-# Load environment variables from .env
-include .env
-export $(shell sed 's/=.*//' .env)
 
 SERVICE_NAME=app
+msg=new migration
 
 build:
 	docker-compose up --build -d
@@ -14,7 +12,9 @@ up:
 	docker-compose up -d
 
 stop:
-	docker-compose stop 
+	docker-compose stop
+
+re: down build
 
 exec:
 	docker-compose exec $(SERVICE_NAME) bash
