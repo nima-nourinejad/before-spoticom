@@ -1,6 +1,5 @@
 import os
 from typing import Union
-from typing import Any
 from datetime import datetime, timedelta, timezone
 from passlib.context import CryptContext
 from fastapi import HTTPException
