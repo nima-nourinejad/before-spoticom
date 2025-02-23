@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from app.models.models import User
@@ -6,7 +7,7 @@ from app.auth.auth_util import auth_util
 
 
 class DatabaseUtil:
-    def add_user(self, request: SignupRequestSchema, session: Session):
+    def add_user(self, request: SignupRequestSchema, session: Session) -> None:
         user = self.__find_user(request.email, session)
         if user:
             raise HTTPException(status_code=409, detail="User already exists")
@@ -23,7 +24,7 @@ class DatabaseUtil:
             raise HTTPException(status_code=404, detail="User not found")
         return user
 
-    def __find_user(self, email: str, session: Session) -> User:
+    def __find_user(self, email: str, session: Session) -> Optional[User]:
         user = session.query(User).filter(User.email == email).first()
         return user
 

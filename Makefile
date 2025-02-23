@@ -12,6 +12,9 @@ up:
 stop:
 	docker-compose stop
 
+run-foreground:
+	docker-compose up
+
 re:
 	docker-compose down
 	docker-compose up --build -d
@@ -30,7 +33,7 @@ format:
 	docker-compose exec $(SERVICE_NAME) black .
 
 mypy:
-	docker-compose exec $(SERVICE_NAME) mypy app/
+	docker-compose exec $(SERVICE_NAME) mypy --install-types app/
 
 commit:
 	git add -A
@@ -39,4 +42,4 @@ commit:
 
 
 
-.PHONY: build down up stop re exec migrate check format mypy commit
+.PHONY: build down up stop run-foreground re exec migrate check format mypy commit
