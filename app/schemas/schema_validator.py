@@ -1,5 +1,5 @@
 from email_validator import validate_email, EmailNotValidError
-from password_strength import PasswordPolicy
+from password_strength import PasswordPolicy, PasswordStats
 from pydantic import EmailStr
 
 
@@ -27,7 +27,9 @@ class SchemaValidator:
             special=1,
         )
         if policy.test(value):
-            raise ValueError("Password is not strong enough")
+            raise ValueError("Password does not meet the requirements")
+        if PasswordStats(value).strength() < 0.5:
+            raise ValueError("Password is too weak")
         if not any(char.islower() for char in value):
-            raise ValueError("Password must contain at least one lowercase letter")
+            raise ValueError("Password does not meet the requirements")
         return value
