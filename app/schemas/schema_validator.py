@@ -1,6 +1,7 @@
 from email_validator import validate_email, EmailNotValidError
 from password_strength import PasswordPolicy
 
+
 class SchemaValidator:
     @staticmethod
     def validate_name(value):
@@ -12,8 +13,8 @@ class SchemaValidator:
     def validate_email(value):
         try:
             validate_email(value, check_deliverability=True)
-        except EmailNotValidError as e:
-            raise ValueError(str(e))
+        except EmailNotValidError as error:
+            raise ValueError(str(error)) from error
         return value
 
     @staticmethod

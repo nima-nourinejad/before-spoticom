@@ -1,9 +1,10 @@
 import os
+from typing import Generator
 from fastapi import HTTPException
 from sqlalchemy import create_engine, Engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
-from typing import Generator
+
 
 Base = declarative_base()
 

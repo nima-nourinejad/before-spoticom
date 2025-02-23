@@ -1,8 +1,11 @@
-from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.schemas import AuthResponseSchema, LoginRequestSchema, SignupRequestSchema
-from app.auth_util import auth_util
-from app.database_util import database_util
+from app.schemas.schemas import (
+    AuthResponseSchema,
+    LoginRequestSchema,
+    SignupRequestSchema,
+)
+from app.auth.auth_util import auth_util
+from app.database.database_util import database_util
 
 
 class AuthRouterUtil:

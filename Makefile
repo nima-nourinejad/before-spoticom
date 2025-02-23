@@ -37,4 +37,6 @@ commit:
 	git commit -m "$(msg)"
 	git push
 
+
+
 .PHONY: build down up stop re exec migrate check format mypy commit

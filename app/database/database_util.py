@@ -1,8 +1,8 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from app.models import User
-from app.schemas import SignupRequestSchema
-from app.auth_util import auth_util
+from app.models.models import User
+from app.schemas.schemas import SignupRequestSchema
+from app.auth.auth_util import auth_util
 
 
 class DatabaseUtil:

@@ -1,5 +1,6 @@
 from pydantic import BaseModel, field_validator, Field, EmailStr
-from app.schema_validator import SchemaValidator
+from app.schemas.schema_validator import SchemaValidator
+
 
 class SignupRequestSchema(BaseModel):
     name: str = Field(..., min_length=1, max_length=50)
@@ -10,12 +11,12 @@ class SignupRequestSchema(BaseModel):
     @classmethod
     def validate_name(cls, value):
         return SchemaValidator.validate_name(value)
-    
+
     @field_validator("email")
     @classmethod
     def validate_email(cls, value):
         return SchemaValidator.validate_email(value)
-    
+
     @field_validator("password")
     @classmethod
     def validate_password(cls, value):
