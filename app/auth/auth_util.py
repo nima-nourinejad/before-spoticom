@@ -24,7 +24,9 @@ class AuthUtil:
             minutes=self.ACCESS_TOKEN_EXPIRE_MINUTES
         )
         to_encode.update({"exp": expire})
-        access_token: str = jwt.encode(to_encode, self.SECRET_KEY, algorithm=self.ALGORITHM)
+        access_token: str = jwt.encode(
+            to_encode, self.SECRET_KEY, algorithm=self.ALGORITHM
+        )
         return access_token
 
     def verify_password(self, plain_password: str, hashed_password: str) -> None:

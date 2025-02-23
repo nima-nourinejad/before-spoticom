@@ -9,17 +9,17 @@ class SignupRequestSchema(BaseModel):
 
     @field_validator("name")
     @classmethod
-    def validate_name(cls, value: str)->str:
+    def validate_name(cls, value: str) -> str:
         return SchemaValidator.validate_name(value)
 
     @field_validator("email")
     @classmethod
-    def validate_email(cls, value: EmailStr)->EmailStr:
+    def validate_email(cls, value: EmailStr) -> EmailStr:
         return SchemaValidator.validate_email(value)
 
     @field_validator("password")
     @classmethod
-    def validate_password(cls, value: str)->str:
+    def validate_password(cls, value: str) -> str:
         return SchemaValidator.validate_password(value)
 
 

@@ -5,13 +5,13 @@ from pydantic import EmailStr
 
 class SchemaValidator:
     @staticmethod
-    def validate_name(value:str)->str:
+    def validate_name(value: str) -> str:
         if value.strip() == "":
             raise ValueError("Name cannot be empty")
         return value
 
     @staticmethod
-    def validate_email(value:EmailStr)->EmailStr:
+    def validate_email(value: EmailStr) -> EmailStr:
         try:
             validate_email(value, check_deliverability=True)
         except EmailNotValidError as error:
@@ -19,7 +19,7 @@ class SchemaValidator:
         return value
 
     @staticmethod
-    def validate_password(value:str)->str:
+    def validate_password(value: str) -> str:
         policy = PasswordPolicy.from_names(
             length=8,
             uppercase=1,

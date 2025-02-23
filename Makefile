@@ -13,6 +13,7 @@ stop:
 	docker-compose stop
 
 run-foreground:
+	docker-compose stop
 	docker-compose up
 
 re:

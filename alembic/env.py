@@ -10,6 +10,7 @@ from alembic import context
 config = context.config
 
 import os
+
 DATABASE_URL = os.getenv("DATABASE_URL")
 config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
