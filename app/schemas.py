@@ -1,24 +1,40 @@
-from pydantic import BaseModel, field_validator
-
+from pydantic import BaseModel, field_validator, Field, EmailStr
+from app.schema_validator import SchemaValidator
 
 class SignupRequestSchema(BaseModel):
-    name: str
-    email: str
-    password: str
+    name: str = Field(..., min_length=1, max_length=50)
+    email: EmailStr
+    password: str = Field(..., min_length=8)
 
     @field_validator("name")
     @classmethod
     def validate_name(cls, value):
-        if value.strip() == "":
-            raise ValueError("Name cannot be empty")
-        if len(value) > 50:
-            raise ValueError("Name cannot be longer than 50 characters")
-        return value
+        return SchemaValidator.validate_name(value)
+    
+    @field_validator("email")
+    @classmethod
+    def validate_email(cls, value):
+        return SchemaValidator.validate_email(value)
+    
+    @field_validator("password")
+    @classmethod
+    def validate_password(cls, value):
+        return SchemaValidator.validate_password(value)
 
 
 class LoginRequestSchema(BaseModel):
-    username: str
-    password: str
+    username: EmailStr
+    password: str = Field(..., min_length=8)
+
+    @field_validator("username")
+    @classmethod
+    def validate_username(cls, value):
+        return SchemaValidator.validate_email(value)
+
+    @field_validator("password")
+    @classmethod
+    def validate_password(cls, value):
+        return SchemaValidator.validate_password(value)
 
 
 class AuthResponseSchema(BaseModel):
