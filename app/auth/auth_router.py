@@ -31,6 +31,8 @@ async def login(
 async def get_user(
     access_token: Annotated[str, Depends(auth_util.OAUTH2_SCHEME)],
     session: Annotated[Session, Depends(database.get_session)],
-):
+) -> dict[str, str]:
     user = database_util.get_user_from_access_token(access_token, session)
-    return {"name": user.name, "email": user.email}
+    if user:
+        return {"name": user.name, "email": user.email}
+    return {"message": "User not found"}

@@ -1,5 +1,5 @@
 import os
-from typing import Union
+from typing import Union, Optional
 from datetime import datetime, timedelta, timezone
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import HTTPException
@@ -41,10 +41,16 @@ class AuthUtil:
 
     def get_username_from_access_token(self, access_token: str) -> str:
         try:
-            decoded = jwt.decode(
-                access_token, self.SECRET_KEY, algorithms=[self.ALGORITHM]
+            decoded: dict[str, str] = jwt.decode(
+                access_token,
+                self.SECRET_KEY,
+                algorithms=[self.ALGORITHM],
+                options={"verify_exp": True},
             )
-            return decoded.get("sub")
+            username: Optional[str] = decoded.get("sub")
+            if not username:
+                raise self.CREDENTIALS_EXCEPTION
+            return username
         except jwt.PyJWTError as exc:
             raise self.CREDENTIALS_EXCEPTION from exc
 
