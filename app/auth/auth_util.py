@@ -1,8 +1,9 @@
 import os
 from typing import Union
 from datetime import datetime, timedelta, timezone
-from passlib.context import CryptContext
+from fastapi.security import OAuth2PasswordBearer
 from fastapi import HTTPException
+from passlib.context import CryptContext
 import jwt
 
 
@@ -13,6 +14,12 @@ class AuthUtil:
         raise HTTPException(status_code=500, detail="Internal server error")
     ALGORITHM = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES = 30
+    OAUTH2_SCHEME = OAuth2PasswordBearer(tokenUrl="/authentication/login")
+    CREDENTIALS_EXCEPTION = HTTPException(
+        status_code=401,
+        detail="Invalid authentication credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
 
     def hash_password(self, password: str) -> str:
         return self.PWD_CONTEXT.hash(password)
@@ -31,6 +38,15 @@ class AuthUtil:
     def verify_password(self, plain_password: str, hashed_password: str) -> None:
         if not self.PWD_CONTEXT.verify(plain_password, hashed_password):
             raise HTTPException(status_code=400, detail="Incorrect password")
+
+    def get_username_from_access_token(self, access_token: str) -> str:
+        try:
+            decoded = jwt.decode(
+                access_token, self.SECRET_KEY, algorithms=[self.ALGORITHM]
+            )
+            return decoded.get("sub")
+        except jwt.PyJWTError as exc:
+            raise self.CREDENTIALS_EXCEPTION from exc
 
 
 auth_util = AuthUtil()

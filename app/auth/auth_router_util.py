@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from app.schemas.schemas import (
     AuthResponseSchema,
-    LoginRequestSchema,
     SignupRequestSchema,
 )
 from app.auth.auth_util import auth_util
@@ -16,8 +15,8 @@ class AuthRouterUtil:
         return AuthResponseSchema(access_token=access_token, token_type="bearer")
 
     @staticmethod
-    def login(request: LoginRequestSchema, session: Session) -> AuthResponseSchema:
-        user = database_util.get_user(request.username, session)
-        auth_util.verify_password(request.password, user.hashed_password)
+    def login(username: str, password: str, session: Session) -> AuthResponseSchema:
+        user = database_util.get_user_with_username(username, session)
+        auth_util.verify_password(password, user.hashed_password)
         access_token = auth_util.create_access_token(user.email)
         return AuthResponseSchema(access_token=access_token, token_type="bearer")

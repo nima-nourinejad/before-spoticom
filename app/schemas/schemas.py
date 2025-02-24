@@ -23,21 +23,6 @@ class SignupRequestSchema(BaseModel):
         return SchemaValidator.validate_password(value)
 
 
-class LoginRequestSchema(BaseModel):
-    username: EmailStr
-    password: str = Field(..., min_length=8)
-
-    @field_validator("username")
-    @classmethod
-    def validate_username(cls, value: EmailStr) -> EmailStr:
-        return SchemaValidator.validate_email(value)
-
-    @field_validator("password")
-    @classmethod
-    def validate_password(cls, value: str) -> str:
-        return SchemaValidator.validate_password(value)
-
-
 class AuthResponseSchema(BaseModel):
     access_token: str
     token_type: str

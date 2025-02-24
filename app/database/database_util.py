@@ -18,14 +18,23 @@ class DatabaseUtil:
         session.add(user)
         session.commit()
 
-    def get_user(self, email: str, session: Session) -> User:
-        user = self.__find_user(email, session)
+    def get_user_with_username(self, username: str, session: Session) -> User:
+        user = self.__find_user(username, session)
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         return user
 
     def __find_user(self, email: str, session: Session) -> Optional[User]:
         user = session.query(User).filter(User.email == email).first()
+        return user
+
+    def get_user_from_access_token(
+        self, access_token: str, session: Session
+    ) -> Optional[User]:
+        username = auth_util.get_username_from_access_token(access_token)
+        user = self.__find_user(username, session)
+        if not user:
+            raise auth_util.CREDENTIALS_EXCEPTION
         return user
 
 
